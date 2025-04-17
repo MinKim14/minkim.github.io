@@ -1,0 +1,32 @@
+\section{Introduction to Algorithms}
+
+In this post, we'll explore the fundamental concepts of algorithms and their importance in computer science.
+
+\subsection{What is an Algorithm?}
+
+An algorithm is a \textbf{step-by-step} procedure for solving a problem or accomplishing a task. It's like a recipe that tells you exactly what to do to achieve a desired result.
+
+\subsection{Key Characteristics}
+
+Every algorithm should have these important properties:
+\begin{itemize}
+    \item \textbf{Input}: The algorithm takes some input
+    \item \textbf{Output}: It produces some output
+    \item \textbf{Definiteness}: Each step is precisely defined
+    \item \textbf{Finiteness}: It must terminate after a finite number of steps
+    \item \textbf{Effectiveness}: Each step must be basic enough to be carried out
+\end{itemize}
+
+\subsection{Example: Binary Search}
+
+Let's look at a simple example of an algorithm: binary search. This algorithm finds the position of a target value within a sorted array.
+
+The time complexity of binary search is $O(\log n)$, which is much more efficient than linear search's $O(n)$.
+
+\begin{enumerate}
+    \item Compare the target value to the middle element of the array
+    \item If the target value matches the middle element, return its position
+    \item If the target value is less than the middle element, search the left half
+    \item If the target value is greater than the middle element, search the right half
+    \item Repeat until the target is found or the search space is empty
+\end{enumerate} 
