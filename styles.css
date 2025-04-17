@@ -171,23 +171,126 @@ footer {
     margin-bottom: 2rem;
 }
 
-.blog-post h2 {
+.post-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.post-title {
     color: #2c3e50;
-    margin-bottom: 1rem;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
 }
 
 .post-meta {
     display: flex;
     gap: 1rem;
-    margin-bottom: 1rem;
     color: #666;
     font-size: 0.9rem;
 }
 
-.post-content {
-    line-height: 1.8;
+.post-date {
+    color: #3498db;
 }
 
-.post-content p {
-    margin-bottom: 1rem;
+.post-category {
+    background: #f0f0f0;
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    color: #2c3e50;
+}
+
+/* LaTeX Content Styling */
+.post-content {
+    line-height: 1.8;
+    color: #333;
+}
+
+.post-paragraph {
+    margin-bottom: 1.5rem;
+    text-align: justify;
+}
+
+.post-section {
+    color: #2c3e50;
+    font-size: 1.8rem;
+    margin: 2rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.post-subsection {
+    color: #2c3e50;
+    font-size: 1.4rem;
+    margin: 1.5rem 0 1rem;
+}
+
+.post-bold {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.post-italic {
+    font-style: italic;
+    color: #555;
+}
+
+.post-list {
+    list-style-type: disc;
+    margin: 1rem 0;
+    padding-left: 2rem;
+}
+
+.post-list-item {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+.post-ordered-list {
+    list-style-type: decimal;
+    margin: 1rem 0;
+    padding-left: 2rem;
+}
+
+.post-ordered-item {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+.post-math {
+    font-family: 'Courier New', monospace;
+    background: #f8f9fa;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    color: #2c3e50;
+}
+
+/* Code Block Styling */
+.post-code {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 5px;
+    font-family: 'Courier New', monospace;
+    margin: 1rem 0;
+    overflow-x: auto;
+}
+
+/* Responsive Design for Blog Posts */
+@media (max-width: 768px) {
+    .blog-post {
+        padding: 1.5rem;
+    }
+
+    .post-title {
+        font-size: 1.6rem;
+    }
+
+    .post-section {
+        font-size: 1.5rem;
+    }
+
+    .post-subsection {
+        font-size: 1.2rem;
+    }
 } 
