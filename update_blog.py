@@ -19,8 +19,21 @@ def get_post_metadata(post_file):
         }
     return None
 
+def create_navigation_links(current_category=None):
+    """Create navigation links for the header."""
+    categories = ['web-development', 'algorithms', 'projects', 'about']
+    links = ['<li><a href="../index.html">Home</a></li>']
+    
+    for cat in categories:
+        active = 'active' if cat == current_category else ''
+        links.append(f'<li><a href="../{cat}.html" class="{active}">{cat.title()}</a></li>')
+    
+    return '\n'.join(links)
+
 def update_section_page(category, posts):
     """Update a section page with new posts."""
+    nav_links = create_navigation_links(category)
+    
     template = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,16 +47,13 @@ def update_section_page(category, posts):
         <nav>
             <div class="logo">Code Blog</div>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="web-development.html">Web Development</a></li>
-                <li><a href="algorithms.html">Algorithms</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="about.html">About</a></li>
+                {nav_links}
             </ul>
         </nav>
     </header>
 
     <main>
+        <div class="color-bar top"></div>
         <section class="section-header">
             <h1>{category.title()}</h1>
             <p>Explore our collection of {category.lower()} articles and tutorials</p>
@@ -52,6 +62,7 @@ def update_section_page(category, posts):
         <section class="content-section">
             {posts}
         </section>
+        <div class="color-bar bottom"></div>
     </main>
 
     <footer>
@@ -64,11 +75,14 @@ def update_section_page(category, posts):
         f.write(template)
 
 def update_index_page(posts):
-    """Update the index page with latest posts."""
-    latest_posts = sorted(posts, key=lambda x: x['date'], reverse=True)[:3]
+    """Update the index page with all posts."""
+    nav_links = create_navigation_links()
+    
+    # Sort posts by date, newest first
+    sorted_posts = sorted(posts, key=lambda x: x['date'], reverse=True)
     
     posts_html = ""
-    for post in latest_posts:
+    for post in sorted_posts:
         posts_html += f"""
             <article class="post-card">
                 <h3>{post['title']}</h3>
@@ -77,20 +91,48 @@ def update_index_page(posts):
             </article>
         """
     
-    # Read the current index.html
-    with open('index.html', 'r', encoding='utf-8') as f:
-        content = f.read()
-    
-    # Replace the post-grid section
-    new_content = re.sub(
-        r'<div class="post-grid">.*?</div>',
-        f'<div class="post-grid">{posts_html}</div>',
-        content,
-        flags=re.DOTALL
-    )
+    template = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Blog</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Code Blog</div>
+            <ul>
+                {nav_links}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="color-bar top"></div>
+        <section class="hero">
+            <h1>Welcome to My Code Blog</h1>
+            <p>Exploring the world of programming, one line at a time</p>
+        </section>
+
+        <section class="featured-posts">
+            <h2>All Posts</h2>
+            <div class="post-grid">
+                {posts_html}
+            </div>
+        </section>
+        <div class="color-bar bottom"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Code Blog. All rights reserved.</p>
+    </footer>
+</body>
+</html>"""
     
     with open('index.html', 'w', encoding='utf-8') as f:
-        f.write(new_content)
+        f.write(template)
 
 def main():
     # Get all posts

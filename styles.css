@@ -40,17 +40,28 @@ nav ul {
     display: flex;
     list-style: none;
     gap: 2rem;
+    margin: 0;
+    padding: 0;
 }
 
 nav a {
     text-decoration: none;
     color: #2c3e50;
     font-weight: 500;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
 }
 
 nav a:hover {
     color: #3498db;
+    background: #f0f0f0;
+}
+
+nav a.active {
+    color: #3498db;
+    background: #f0f0f0;
+    font-weight: 600;
 }
 
 /* Main Content */
@@ -89,6 +100,7 @@ main {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
+    margin-top: 2rem;
 }
 
 .post-card {
@@ -96,24 +108,43 @@ main {
     padding: 1.5rem;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .post-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .post-card h3 {
     color: #2c3e50;
     margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.post-card p {
+    color: #666;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
 }
 
 .read-more {
     display: inline-block;
-    margin-top: 1rem;
-    color: #3498db;
+    padding: 0.5rem 1rem;
+    background: #3498db;
+    color: white;
     text-decoration: none;
-    font-weight: 500;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    align-self: flex-start;
+}
+
+.read-more:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
 }
 
 /* Footer */
@@ -134,12 +165,20 @@ footer {
 
     nav ul {
         flex-direction: column;
-        text-align: center;
         gap: 1rem;
+    }
+
+    nav a {
+        display: block;
+        text-align: center;
     }
 
     .hero h1 {
         font-size: 2rem;
+    }
+
+    .post-grid {
+        grid-template-columns: 1fr;
     }
 }
 
