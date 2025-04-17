@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parallel - Code Blog</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Code Blog</div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="web-development.html">Web Development</a></li>
+                <li><a href="algorithms.html">Algorithms</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="section-header">
+            <h1>Parallel</h1>
+            <p>Explore our collection of parallel articles and tutorials</p>
+        </section>
+
+        <section class="content-section">
+            
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Gpu - Code Blog</title>
+        <link rel="stylesheet" href="../styles.css">
+    </head>
+    <body>
+        <header>
+            <nav>
+                <div class="logo">Code Blog</div>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../web-development.html">Web Development</a></li>
+                    <li><a href="../algorithms.html">Algorithms</a></li>
+                    <li><a href="../projects.html">Projects</a></li>
+                    <li><a href="../about.html">About</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <div class="color-bar top"></div>
+            <article class="blog-post">
+                <div class="post-header">
+                    <h2 class="post-title">Gpu</h2>
+                    <div class="post-meta">
+                        <span class="post-date">April 17, 2025</span>
+                        <span class="post-category">Parallel</span>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <p class="post-paragraph">\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{tcolorbox}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{geometry}
+\geometry{margin=1in}</p>
+<p class="post-paragraph">\title{Parallelizing Deep Learning Workloads with Dynomo's \texttt{gpu\_map} Utility}
+\author{}
+\date{}</p>
+<p class="post-paragraph">\definecolor{codegray}{rgb}{0.95,0.95,0.95}
+\lstset{
+  backgroundcolor=\color{codegray},
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  frame=single,
+  captionpos=b,
+  tabsize=2,
+  showstringspaces=false,
+  commentstyle=\color{gray},
+  keywordstyle=\color{blue},
+  stringstyle=\color{red},
+  language=Python
+}</p>
+<p class="post-paragraph">\begin{document}</p>
+<p class="post-paragraph">\maketitle</p>
+<p class="post-paragraph">\section*{Overview}</p>
+<p class="post-paragraph">When running deep learning models, it's important to parallelize Python functions across multiple GPUs—especially when dealing with large datasets or compute-heavy tasks. Today, I came across the <strong class="post-bold">Dynomo</strong> framework, and I was impressed by how cleanly it handles GPU parallelism. In this post, I walk through how Dynomo's \texttt{gpu\_map} function works under the hood and how you can use it to scale your multi-GPU workflows.</p>
+<p class="post-paragraph">\section*{What is \texttt{gpu\_map}?}</p>
+<p class="post-paragraph">The \texttt{gpu\_map} function is designed to distribute a Python function across multiple GPUs using \texttt{multiprocessing}. It supports two scheduling modes:</p>
+<p class="post-paragraph"><ul class="post-list">
+  <li class="post-list-item"><strong class="post-bold">Static</strong>: Evenly splits inputs across GPUs. Best when task runtimes are uniform.
+  </li><li class="post-list-item"><strong class="post-bold">Dynamic</strong>: Assigns GPUs as they become available. Best for imbalanced workloads.
+</ul></p>
+<p class="post-paragraph">\section*{Function Signature}</p>
+<p class="post-paragraph">\begin{lstlisting}[language=Python]
+def gpu_map(func, args, n_ranks=None, gpus=None, method="static", progress_msg=None):
+\end{lstlisting}</p>
+<p class="post-paragraph">\subsection*{Parameters}</p>
+<p class="post-paragraph"><ul class="post-list">
+  </li><li class="post-list-item">\texttt{func}: The function to be executed in parallel.
+  </li><li class="post-list-item">\texttt{args}: A list of arguments to be passed to \texttt{func}.
+  </li><li class="post-list-item">\texttt{n\_ranks}: Number of parallel processes (default: number of GPUs).
+  </li><li class="post-list-item">\texttt{gpus}: List of GPU device IDs (optional).
+  </li><li class="post-list-item">\texttt{method}: \texttt{"static"} or \texttt{"dynamic"} scheduling.
+  </li><li class="post-list-item">\texttt{progress\_msg}: Optional message to show a progress bar with \texttt{tqdm}.
+</ul></p>
+<p class="post-paragraph">\section*{Step-by-Step: Static Scheduling Mode}</p>
+<p class="post-paragraph">\subsection*{1. Device Setup}
+If no GPU list is provided, it automatically detects available GPUs using the environment or \texttt{nvidia-smi}.</p>
+<p class="post-paragraph">\subsection*{2. Static Argument Distribution}</p>
+<p class="post-paragraph">\begin{lstlisting}[language=Python]
+args_by_rank = [args[rank::n_ranks] for rank in range(n_ranks)]
+args_by_rank = [[a + [gpus[i]] for a in args_by_rank[i]] for i in range(n_ranks)]
+\end{lstlisting}</p>
+<p class="post-paragraph">Each GPU gets every \texttt{n\_ranks}-th item from \texttt{args}, and each argument is extended with the GPU ID.</p>
+<p class="post-paragraph">\subsection*{3. Process Spawning and Execution}</p>
+<p class="post-paragraph">\begin{lstlisting}[language=Python]
+proc_args = (func, args_by_rank[rank], rank, result_queue, progress_msg)
+proc = mp.Process(target=gpu_map_static_helper, args=proc_args)
+\end{lstlisting}</p>
+<p class="post-paragraph">Each subprocess runs a helper function that executes its chunk of work.</p>
+<p class="post-paragraph">\subsection*{4. Result Aggregation}</p>
+<p class="post-paragraph">\begin{lstlisting}[language=Python]
+outputs = []
+for it in range(len(args)):
+    rank = it % n_ranks
+    idx = it // n_ranks
+    outputs.append(outputs_by_rank[rank][idx])
+\end{lstlisting}</p>
+<p class="post-paragraph">This reorders the results back into the original input order.</p>
+<p class="post-paragraph">\section*{Dynamic Scheduling Mode}</p>
+<p class="post-paragraph">Instead of dividing the work in advance, tasks are launched one-by-one as GPUs become available. A queue tracks available GPUs, and tasks are dynamically assigned.</p>
+<p class="post-paragraph">\begin{lstlisting}[language=Python]
+gpu_queue = mp.Queue()
+for rank in range(n_ranks):
+    gpu_queue.put(gpus[rank % len(gpus)])
+\end{lstlisting}</p>
+<p class="post-paragraph">Each task waits for a GPU, launches, and releases the GPU back to the queue upon completion.</p>
+<p class="post-paragraph">\section*{Fallback Mode}</p>
+<p class="post-paragraph">If \texttt{method=None}, the function executes serially:</p>
+<p class="post-paragraph">\begin{lstlisting}[language=Python]
+return [func(*arg) for arg in args]
+\end{lstlisting}</p>
+<p class="post-paragraph">\section*{Helper Function: \texttt{gpu\_map\_static\_helper}}</p>
+<p class="post-paragraph">\begin{lstlisting}[language=Python]
+def gpu_map_static_helper(func, args, rank, result_queue, progress_msg):
+    if progress_msg is not None:
+        args = tqdm.tqdm(args, desc=progress_msg)
+    out = [func(*arg) if isinstance(arg, tuple) else func(arg) for arg in args]
+    result_queue.put((rank, out))
+\end{lstlisting}</p>
+<p class="post-paragraph">\subsection*{Line-by-Line Breakdown}
+<ul class="post-list">
+  </li><li class="post-list-item">If a progress message is given, wraps the input with \texttt{tqdm} for a visual progress bar.
+  </li><li class="post-list-item">Iterates over the input arguments, applying \texttt{func} to each.
+  </li><li class="post-list-item">Automatically unpacks tuple inputs when needed.
+  </li>\item Sends results back to the main process using a shared \texttt{Queue}, along with the process rank.
+</ul></p>
+<p class="post-paragraph">\section*{Example Usage}</p>
+<p class="post-paragraph">\begin{lstlisting}[language=Python]
+def render_scene(scene_data, camera_settings, gpu_id):
+    torch.cuda.set_device(gpu_id)
+    return render(scene_data, camera_settings)</p>
+<p class="post-paragraph">input_args = [(scene, cam) for scene, cam in zip(scene_list, camera_list)]
+results = gpu_map(render_scene, input_args, method="static", progress_msg="Rendering Scenes")
+\end{lstlisting}</p>
+<p class="post-paragraph">\section*{Conclusion}</p>
+<p class="post-paragraph">Dynomo's \texttt{gpu\_map} utility provides a clean and powerful abstraction for parallelizing workloads over multiple GPUs. Whether you're training, rendering, or processing in parallel, this tool allows you to scale seamlessly with minimal code changes. It supports static and dynamic scheduling, manages GPU visibility cleanly, and works well with CUDA-based workflows like PyTorch.</p>
+<p class="post-paragraph">\end{document}</p>
+                </div>
+                <div class="post-navigation">
+                    <a href="../parallel.html" class="back-button">← Back to Parallel</a>
+                    <a href="../index.html" class="home-button">Home</a>
+                </div>
+            </article>
+            <div class="color-bar bottom"></div>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 Code Blog. All rights reserved.</p>
+        </footer>
+    </body>
+    </html>
+    
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Code Blog. All rights reserved.</p>
+    </footer>
+</body>
+</html>
