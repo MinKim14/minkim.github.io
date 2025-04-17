@@ -7,31 +7,57 @@ def convert_latex_to_html(latex_file):
     with open(latex_file, 'r', encoding='utf-8') as f:
         content = f.read()
     
-    # Basic LaTeX to HTML conversions with blog styling
-    html_content = content
+    # Remove LaTeX document class and packages
+    content = re.sub(r'\\documentclass\{.*?\}', '', content)
+    content = re.sub(r'\\usepackage\{.*?\}', '', content)
+    content = re.sub(r'\\geometry\{.*?\}', '', content)
+    content = re.sub(r'\\definecolor\{.*?\}', '', content)
+    content = re.sub(r'\\lstset\{.*?\}', '', content)
+    content = re.sub(r'\\title\{.*?\}', '', content)
+    content = re.sub(r'\\author\{.*?\}', '', content)
+    content = re.sub(r'\\date\{.*?\}', '', content)
+    content = re.sub(r'\\begin\{document\}', '', content)
+    content = re.sub(r'\\end\{document\}', '', content)
+    content = re.sub(r'\\maketitle', '', content)
     
     # Convert LaTeX commands to HTML with blog-specific classes
-    html_content = re.sub(r'\\section\{(.*?)\}', r'<h2 class="post-section">\1</h2>', html_content)
-    html_content = re.sub(r'\\subsection\{(.*?)\}', r'<h3 class="post-subsection">\1</h3>', html_content)
+    html_content = content
+    
+    # Convert section* to h2
+    html_content = re.sub(r'\\section\*\{(.*?)\}', r'<h2 class="post-section">\1</h2>', html_content)
+    html_content = re.sub(r'\\subsection\*\{(.*?)\}', r'<h3 class="post-subsection">\1</h3>', html_content)
+    
+    # Convert texttt to code
+    html_content = re.sub(r'\\texttt\{(.*?)\}', r'<code class="post-code-inline">\1</code>', html_content)
+    
+    # Convert textbf to strong
     html_content = re.sub(r'\\textbf\{(.*?)\}', r'<strong class="post-bold">\1</strong>', html_content)
-    html_content = re.sub(r'\\textit\{(.*?)\}', r'<em class="post-italic">\1</em>', html_content)
     
     # Convert itemize with blog styling
     html_content = re.sub(r'\\begin\{itemize\}', r'<ul class="post-list">', html_content)
     html_content = re.sub(r'\\end\{itemize\}', r'</ul>', html_content)
     html_content = re.sub(r'\\item\s*(.*?)(?=\\item|\\end\{itemize\})', r'<li class="post-list-item">\1</li>', html_content, flags=re.DOTALL)
     
-    # Convert enumerate with blog styling
-    html_content = re.sub(r'\\begin\{enumerate\}', r'<ol class="post-ordered-list">', html_content)
-    html_content = re.sub(r'\\end\{enumerate\}', r'</ol>', html_content)
-    html_content = re.sub(r'\\item\s*(.*?)(?=\\item|\\end\{enumerate\})', r'<li class="post-ordered-item">\1</li>', html_content, flags=re.DOTALL)
+    # Convert lstlisting to pre and code
+    def process_listing(match):
+        language = re.search(r'\[language=(.*?)\]', match.group(0))
+        lang_class = f'language-{language.group(1).lower()}' if language else ''
+        code = re.search(r'\\begin\{lstlisting\}.*?\n(.*?)\\end\{lstlisting\}', match.group(0), re.DOTALL)
+        if code:
+            return f'<pre class="post-code-block {lang_class}"><code>{code.group(1).strip()}</code></pre>'
+        return match.group(0)
     
-    # Convert math with blog styling
+    html_content = re.sub(r'\\begin\{lstlisting\}.*?\\end\{lstlisting\}', process_listing, html_content, flags=re.DOTALL)
+    
+    # Convert math to HTML (basic support)
     html_content = re.sub(r'\$(.*?)\$', r'<span class="post-math">\1</span>', html_content)
     
     # Add paragraph styling
     html_content = re.sub(r'\n\n', r'</p>\n<p class="post-paragraph">', html_content)
     html_content = '<p class="post-paragraph">' + html_content + '</p>'
+    
+    # Clean up multiple newlines
+    html_content = re.sub(r'\n{3,}', '\n\n', html_content)
     
     return html_content
 
@@ -48,6 +74,9 @@ def create_blog_post(html_content, title, category, date=None):
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{title} - Code Blog</title>
         <link rel="stylesheet" href="../styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
     </head>
     <body>
         <header>

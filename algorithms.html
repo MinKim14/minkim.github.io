@@ -36,6 +36,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Introduction to Algorithms - Code Blog</title>
         <link rel="stylesheet" href="../styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
     </head>
     <body>
         <header>
@@ -62,11 +65,11 @@
                     </div>
                 </div>
                 <div class="post-content">
-                    <p class="post-paragraph"><h2 class="post-section">Introduction to Algorithms</h2></p>
+                    <p class="post-paragraph">\section{Introduction to Algorithms}</p>
 <p class="post-paragraph">In this post, we'll explore the fundamental concepts of algorithms and their importance in computer science.</p>
-<p class="post-paragraph"><h3 class="post-subsection">What is an Algorithm?</h3></p>
+<p class="post-paragraph">\subsection{What is an Algorithm?}</p>
 <p class="post-paragraph">An algorithm is a <strong class="post-bold">step-by-step</strong> procedure for solving a problem or accomplishing a task. It's like a recipe that tells you exactly what to do to achieve a desired result.</p>
-<p class="post-paragraph"><h3 class="post-subsection">Key Characteristics</h3></p>
+<p class="post-paragraph">\subsection{Key Characteristics}</p>
 <p class="post-paragraph">Every algorithm should have these important properties:
 <ul class="post-list">
     <li class="post-list-item"><strong class="post-bold">Input</strong>: The algorithm takes some input
@@ -75,16 +78,16 @@
     </li><li class="post-list-item"><strong class="post-bold">Finiteness</strong>: It must terminate after a finite number of steps
     </li><li class="post-list-item"><strong class="post-bold">Effectiveness</strong>: Each step must be basic enough to be carried out
 </ul></p>
-<p class="post-paragraph"><h3 class="post-subsection">Example: Binary Search</h3></p>
+<p class="post-paragraph">\subsection{Example: Binary Search}</p>
 <p class="post-paragraph">Let's look at a simple example of an algorithm: binary search. This algorithm finds the position of a target value within a sorted array.</p>
 <p class="post-paragraph">The time complexity of binary search is <span class="post-math">O(\log n)</span>, which is much more efficient than linear search's <span class="post-math">O(n)</span>.</p>
-<p class="post-paragraph"><ol class="post-ordered-list">
+<p class="post-paragraph">\begin{enumerate}
     </li><li class="post-list-item">Compare the target value to the middle element of the array
     </li><li class="post-list-item">If the target value matches the middle element, return its position
     </li><li class="post-list-item">If the target value is less than the middle element, search the left half
     </li><li class="post-list-item">If the target value is greater than the middle element, search the right half
     </li>\item Repeat until the target is found or the search space is empty
-</ol> </p>
+\end{enumerate} </p>
                 </div>
                 <div class="post-navigation">
                     <a href="../algorithms.html" class="back-button">← Back to Algorithms</a>

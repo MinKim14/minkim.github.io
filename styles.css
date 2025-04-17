@@ -315,6 +315,53 @@ footer {
     overflow-x: auto;
 }
 
+.post-code-block {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+    overflow-x: auto;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    border: 1px solid #e0e0e0;
+}
+
+.post-code-inline {
+    background: #f0f0f0;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    color: #2c3e50;
+}
+
+/* Syntax Highlighting Overrides */
+.hljs {
+    background: transparent;
+    padding: 0;
+}
+
+.hljs-keyword {
+    color: #3498db;
+}
+
+.hljs-string {
+    color: #e74c3c;
+}
+
+.hljs-comment {
+    color: #95a5a6;
+}
+
+.hljs-function {
+    color: #2ecc71;
+}
+
+.hljs-title {
+    color: #9b59b6;
+}
+
 /* Responsive Design for Blog Posts */
 @media (max-width: 768px) {
     .blog-post {
