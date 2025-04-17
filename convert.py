@@ -41,18 +41,54 @@ def create_blog_post(html_content, title, category, date=None):
         date = datetime.now().strftime("%B %d, %Y")
     
     post_template = f"""
-    <article class="blog-post">
-        <div class="post-header">
-            <h2 class="post-title">{title}</h2>
-            <div class="post-meta">
-                <span class="post-date">{date}</span>
-                <span class="post-category">{category}</span>
-            </div>
-        </div>
-        <div class="post-content">
-            {html_content}
-        </div>
-    </article>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{title} - Code Blog</title>
+        <link rel="stylesheet" href="../styles.css">
+    </head>
+    <body>
+        <header>
+            <nav>
+                <div class="logo">Code Blog</div>
+                <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../web-development.html">Web Development</a></li>
+                    <li><a href="../algorithms.html">Algorithms</a></li>
+                    <li><a href="../projects.html">Projects</a></li>
+                    <li><a href="../about.html">About</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <div class="color-bar top"></div>
+            <article class="blog-post">
+                <div class="post-header">
+                    <h2 class="post-title">{title}</h2>
+                    <div class="post-meta">
+                        <span class="post-date">{date}</span>
+                        <span class="post-category">{category}</span>
+                    </div>
+                </div>
+                <div class="post-content">
+                    {html_content}
+                </div>
+                <div class="post-navigation">
+                    <a href="../{category.lower()}.html" class="back-button">← Back to {category.title()}</a>
+                    <a href="../index.html" class="home-button">Home</a>
+                </div>
+            </article>
+            <div class="color-bar bottom"></div>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 Code Blog. All rights reserved.</p>
+        </footer>
+    </body>
+    </html>
     """
     
     return post_template

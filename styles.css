@@ -293,4 +293,73 @@ footer {
     .post-subsection {
         font-size: 1.2rem;
     }
+}
+
+/* Color Bars */
+.color-bar {
+    height: 8px;
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.color-bar.top {
+    border-radius: 8px 8px 0 0;
+    margin-bottom: -8px;
+}
+
+.color-bar.bottom {
+    border-radius: 0 0 8px 8px;
+    margin-top: -8px;
+}
+
+/* Post Navigation */
+.post-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid #f0f0f0;
+}
+
+.back-button, .home-button {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.back-button {
+    background: #f0f0f0;
+    color: #2c3e50;
+}
+
+.home-button {
+    background: #3498db;
+    color: white;
+}
+
+.back-button:hover {
+    background: #e0e0e0;
+    transform: translateX(-5px);
+}
+
+.home-button:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+}
+
+/* Responsive Design for Navigation */
+@media (max-width: 768px) {
+    .post-navigation {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .back-button, .home-button {
+        width: 100%;
+        text-align: center;
+    }
 } 
